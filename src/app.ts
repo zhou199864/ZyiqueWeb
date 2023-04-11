@@ -1,14 +1,18 @@
 import express from 'express'
 import cors from 'cors'
 
-import helloRouter from './router/user-router'
-
+import userRouter from './router/user-router'
+import { tokenAuth } from './middle/token-middle';
+/**
+ * 中间件
+ */
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/user", helloRouter);
+app.use(tokenAuth)
+app.use("/user", userRouter);
 
 
 app.listen(8099, () => {
